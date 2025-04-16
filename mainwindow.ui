@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width> <!-- Możesz dostosować rozmiar -->
+    <height>768</height> <!-- Możesz dostosować rozmiar -->
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Monitor Jakości Powietrza</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_Main">
+    <item>
+     <widget class="QWidget" name="topButtonWidget" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout_TopButtons">
+       <item>
+        <widget class="QPushButton" name="fetchStationsButton">
+         <property name="text">
+          <string>Pobierz Stacje (API)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="loadStationsButton">
+         <property name="text">
+          <string>Wczytaj Stacje (Plik)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="saveStationsButton">
+         <property name="text">
+          <string>Zapisz Stacje (Plik)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_Top">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSplitter" name="mainSplitter">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QWidget" name="leftPaneWidget" native="true">
+       <layout class="QVBoxLayout" name="verticalLayout_Left">
+        <item>
+         <widget class="QLabel" name="label_Stations">
+          <property name="text">
+           <string>Stacje Pomiarowe:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="stationsListWidget"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_Sensors">
+          <property name="text">
+           <string>Czujniki (Stanowiska):</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="sensorsListWidget"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="loadSensorDataButton">
+          <property name="text">
+           <string>Wczytaj Dane Czujnika</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="saveSensorDataButton">
+          <property name="text">
+           <string>Zapisz Dane Czujnika</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="rightPaneWidget" native="true">
+       <layout class="QVBoxLayout" name="verticalLayout_Right">
+        <item>
+         <widget class="QGroupBox" name="aqiGroupBox">
+          <property name="title">
+           <string>Indeks Jakości Powietrza</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_AQI"> <!-- Można też użyć QGridLayout dla lepszego wyrównania -->
+           <item>
+            <widget class="QLabel" name="aqiStationLabel">
+             <property name="text">
+              <string>Indeks dla:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="aqiCalcDateLabel">
+             <property name="text">
+              <string>Obliczony:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="aqiOverallLabel">
+             <property name="text">
+              <string>Ogólny:</string>
+             </property>
+             <property name="font">
+              <font>
+               <weight>Bold</weight>
+              </font>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="aqiPM10Label">
+             <property name="text">
+              <string>PM10:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="aqiPM25Label">
+             <property name="text">
+              <string>PM2.5:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="aqiO3Label">
+             <property name="text">
+              <string>O3:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="aqiNO2Label">
+             <property name="text">
+              <string>NO2:</string>
+             </property>
+            </widget>
+           </item>
+            <item>
+            <widget class="QLabel" name="aqiSO2Label">
+             <property name="text">
+              <string>SO2:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="aqiCOLabel">
+             <property name="text">
+              <string>CO:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="aqiC6H6Label">
+             <property name="text">
+              <string>C6H6:</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="chartGroupBox">
+          <property name="title">
+           <string>Wykres Danych Pomiarowych</string>
+          </property>
+          <layout class="QVBoxLayout" name="chartLayout">
+           <!-- QChartView zostanie dodany tutaj programistycznie -->
+           <!-- Można dodać QLabel jako placeholder, jeśli chcesz -->
+           <!--
+           <item>
+            <widget class="QLabel" name="labelChartPlaceholder">
+             <property name="text">
+              <string>Wybierz czujnik, aby wyświetlić wykres.</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           -->
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="analyzeButton">
+          <property name="text">
+           <string>Analizuj Dane Wykresu</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="analysisGroupBox">
+          <property name="title">
+           <string>Analiza Danych</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_Analysis">
+           <item>
+            <widget class="QLabel" name="analysisMinLabel">
+             <property name="text">
+              <string>Min: -</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="analysisMaxLabel">
+             <property name="text">
+              <string>Max: -</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="analysisAvgLabel">
+             <property name="text">
+              <string>Średnia: -</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="analysisTrendLabel">
+             <property name="text">
+              <string>Trend: -</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <!-- Spacer, aby podnieść elementy do góry, jeśli jest mało danych -->
+         <spacer name="verticalSpacer_Right">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <!-- Możesz dodać menu Plik, Pomoc etc. jeśli potrzebujesz -->
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
