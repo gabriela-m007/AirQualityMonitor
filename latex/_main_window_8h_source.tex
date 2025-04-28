@@ -1,0 +1,113 @@
+\doxysection{Main\+Window.\+h}
+\hypertarget{_main_window_8h_source}{}\label{_main_window_8h_source}\mbox{\hyperlink{_main_window_8h}{Idź do dokumentacji tego pliku.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ MAINWINDOW\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ MAINWINDOW\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <QMainWindow>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_data_structures_8h}{DataStructures.h}}"{}}\ \textcolor{comment}{//\ Podstawowe\ struktury\ danych}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_data_analyzer_8h}{DataAnalyzer.h}}"{}}\ \ \ \textcolor{comment}{//\ Do\ wyników\ analizy}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ Forward\ declarations\ dla\ klas\ QtCharts}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <QtCharts/QChartView>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <QtCharts/QChart>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <QtCharts/QSplineSeries>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <QtCharts/QDateTimeAxis>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <QtCharts/QValueAxis>}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ Forward\ declarations\ dla\ własnych\ klas\ i\ klas\ Qt\ używanych\ jako\ wskaźniki/referencje}}
+\DoxyCodeLine{00021\ \textcolor{keyword}{namespace\ }Ui\ \{\ \textcolor{keyword}{class\ }MainWindow;\ \}}
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_api_service}{ApiService}};}
+\DoxyCodeLine{00023\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_data_storage}{DataStorage}};}
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_data_analyzer}{DataAnalyzer}};}
+\DoxyCodeLine{00025\ \textcolor{keyword}{class\ }QListWidgetItem;}
+\DoxyCodeLine{00026\ \textcolor{keyword}{class\ }QDateTimeEdit;}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_main_window_a996c5a2b6f77944776856f08ec30858d}{MainWindow}}\ :\ \textcolor{keyword}{public}\ QMainWindow}
+\DoxyCodeLine{00038\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{class_main_window_a996c5a2b6f77944776856f08ec30858d}{MainWindow}}(QWidget\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{class_main_window_ae98d00a93bc118200eeef9f9bba1dba7}{\string~MainWindow}}();}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{comment}{//\ Prywatne\ sloty\ podłączone\ do\ sygnałów\ z\ GUI\ (np.\ kliknięcia\ przycisków)\ lub\ innych\ obiektów}}
+\DoxyCodeLine{00054\ \textcolor{keyword}{private}\ slots:}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ on\_fetchStationsButton\_clicked();}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ on\_stationsListWidget\_itemClicked(QListWidgetItem\ *item);}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ on\_sensorsListWidget\_itemClicked(QListWidgetItem\ *item);}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ on\_loadStationsButton\_clicked();}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ on\_saveStationsButton\_clicked();}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ on\_loadSensorDataButton\_clicked();}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ on\_saveSensorDataButton\_clicked();}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ on\_analyzeButton\_clicked();}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{void}\ on\_filterDataButton\_clicked();}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{void}\ on\_clearCityFilterButton\_clicked();}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ filterStations(\textcolor{keyword}{const}\ QString\ \&text);}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//\ Sloty\ obsługujące\ sygnały\ z\ ApiService}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{void}\ handleStationsReady(\textcolor{keyword}{const}\ std::vector<MeasuringStation>\&\ stations);}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{void}\ handleSensorsReady(\textcolor{keyword}{const}\ std::vector<Sensor>\&\ sensors);}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{void}\ handleSensorDataReady(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_sensor_data}{SensorData}}\&\ data);}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{void}\ handleAirQualityIndexReady(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_air_quality_index}{AirQualityIndex}}\&\ index);}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ handleNetworkError(\textcolor{keyword}{const}\ QString\&\ errorMsg);}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{//\ Metody\ prywatne\ -\/\ logika\ pomocnicza}}
+\DoxyCodeLine{00092\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{void}\ updateStationsList(\textcolor{keyword}{const}\ std::vector<MeasuringStation>\&\ stations);}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{void}\ updateSensorsList(\textcolor{keyword}{const}\ std::vector<Sensor>\&\ sensors);}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{void}\ updateChart(\textcolor{keyword}{const}\ std::vector<MeasurementValue>\&\ valuesToPlot,\ \textcolor{keyword}{const}\ QString\&\ seriesKey);}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{void}\ updateAnalysisResults(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_analysis_result}{AnalysisResult}}\&\ result);}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{void}\ updateAirQualityIndexDisplay(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_air_quality_index}{AirQualityIndex}}\&\ index);}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{void}\ displayErrorMessage(\textcolor{keyword}{const}\ QString\&\ message);}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{void}\ clearSensorDetails();}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{void}\ clearChart();}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{void}\ clearAnalysisResults();}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{void}\ clearAirQualityIndexDisplay();}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{int}\ getSelectedStationId();}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{int}\ getSelectedSensorId();}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_lastClickedStationId\ =\ -\/1;}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{void}\ setupDateTimeEditsWithDataRange(\textcolor{keyword}{const}\ std::vector<MeasurementValue>\&\ values);}
+\DoxyCodeLine{00125\ \ \ \ \ std::vector<MeasurementValue>\ filterDataByDateRange(\textcolor{keyword}{const}\ std::vector<MeasurementValue>\&\ originalValues,}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QDateTime\&\ startDate,}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QDateTime\&\ endDate);}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{bool}\ loadStationsFromFile();}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{bool}\ loadSensorDataFromFile(\textcolor{keywordtype}{int}\ sensorId);}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keywordtype}{void}\ setUiFetchingState(\textcolor{keywordtype}{bool}\ isFetchingStations,\ \textcolor{keywordtype}{bool}\ isFetchingSensors,\ \textcolor{keywordtype}{bool}\ isFetchingSensorData);}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Komponenty\ UI\ i\ Logika\ Biznesowa\ -\/-\/-\/}}
+\DoxyCodeLine{00144\ \ \ \ \ Ui::MainWindow\ *ui;}
+\DoxyCodeLine{00146\ \ \ \ \ \mbox{\hyperlink{class_api_service}{ApiService}}\ *m\_apiService;}
+\DoxyCodeLine{00148\ \ \ \ \ \mbox{\hyperlink{class_data_storage}{DataStorage}}\ *m\_dataStorage;}
+\DoxyCodeLine{00150\ \ \ \ \ \mbox{\hyperlink{class_data_analyzer}{DataAnalyzer}}\ *m\_analyzer;}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Buforowane\ dane\ -\/-\/-\/}}
+\DoxyCodeLine{00154\ \ \ \ \ std::vector<MeasuringStation>\ m\_currentStations;}
+\DoxyCodeLine{00156\ \ \ \ \ std::vector<Sensor>\ m\_currentSensors;}
+\DoxyCodeLine{00158\ \ \ \ \ \mbox{\hyperlink{struct_sensor_data}{SensorData}}\ m\_currentSensorData;}
+\DoxyCodeLine{00160\ \ \ \ \ \mbox{\hyperlink{struct_air_quality_index}{AirQualityIndex}}\ m\_currentAirQualityIndex;}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Komponenty\ Wykresu\ -\/-\/-\/}}
+\DoxyCodeLine{00164\ \ \ \ \ QChart\ *m\_chart;}
+\DoxyCodeLine{00166\ \ \ \ \ QChartView\ *m\_chartView;}
+\DoxyCodeLine{00168\ \ \ \ \ QSplineSeries\ *m\_series;}
+\DoxyCodeLine{00170\ \ \ \ \ QDateTimeAxis\ *m\_axisX;}
+\DoxyCodeLine{00172\ \ \ \ \ QValueAxis\ *m\_axisY;}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Flagi\ stanu\ -\/-\/-\/}}
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_isFetchingStations\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_isFetchingSensors\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_isFetchingSensorData\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00181\ \};}
+\DoxyCodeLine{00182\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ MAINWINDOW\_H}}
+
+\end{DoxyCode}

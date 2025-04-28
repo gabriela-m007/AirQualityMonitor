@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['saveairqualityindextojson_0',['saveAirQualityIndexToJson',['../class_data_storage.html#a278d2ddc481f0b7e2b0589ecd722dce2',1,'DataStorage']]],
+  ['savesensordatatojson_1',['saveSensorDataToJson',['../class_data_storage.html#a6f1dc14e6bfbf0655f21f80c20ab3e4f',1,'DataStorage']]],
+  ['savesensorstojson_2',['saveSensorsToJson',['../class_data_storage.html#a7e818e296a7b183b09ba2e0f0174c634',1,'DataStorage']]],
+  ['savestationstojson_3',['saveStationsToJson',['../class_data_storage.html#ab0954d8c62c4120954147fe6d7077c94',1,'DataStorage']]],
+  ['sensor_4',['Sensor',['../struct_sensor.html',1,'']]],
+  ['sensordata_5',['SensorData',['../struct_sensor_data.html',1,'']]],
+  ['sensordataready_6',['sensorDataReady',['../class_api_service.html#a2a0a7a3bb25aa1d5f19acd1253f870c4',1,'ApiService']]],
+  ['sensorsready_7',['sensorsReady',['../class_api_service.html#a61456f2026b7d779452c71f7059b18ae',1,'ApiService']]],
+  ['so2indexlevel_8',['so2IndexLevel',['../struct_air_quality_index.html#ab2b8e09862ecf32193e28e47c45ed61b',1,'AirQualityIndex']]],
+  ['stable_9',['STABLE',['../struct_analysis_result.html#ab5c24f504e88ec9da0528818416b4e23a75d3f5bd86e7888beca6897416a5c2b0',1,'AnalysisResult']]],
+  ['stationid_10',['stationId',['../struct_sensor.html#aca0077c550e028e9dfd7f3cd8c9911e5',1,'Sensor::stationId'],['../struct_air_quality_index.html#a1b48c96d30ddacf2eb8fa83ea58a5f83',1,'AirQualityIndex::stationId']]],
+  ['stationname_11',['stationName',['../struct_measuring_station.html#a8907837fcf54aa06b1436ba0e489d18f',1,'MeasuringStation']]],
+  ['stationsready_12',['stationsReady',['../class_api_service.html#ad23a603a0f34e45afa78165923856e3c',1,'ApiService']]],
+  ['stcalcdate_13',['stCalcDate',['../struct_air_quality_index.html#a383052497d119e8175037e3d52788753',1,'AirQualityIndex']]],
+  ['stindexlevel_14',['stIndexLevel',['../struct_air_quality_index.html#a4b4479d74d2d86dd4814b5715151a1f2',1,'AirQualityIndex']]],
+  ['stsourcedatadate_15',['stSourceDataDate',['../struct_air_quality_index.html#a9488dfd5f81df6a7be8beba44acc8713',1,'AirQualityIndex']]]
+];

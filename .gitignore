@@ -1,0 +1,30 @@
+# Pliki budowania i tymczasowe
+/build-*/
+/debug/
+/release/
+*.o
+*.obj
+*.ilk
+*.pdb
+*.pch
+*.suo
+*.user
+*.pro.user
+*.pro.user.*
+Makefile*
+*.moc
+*.rcc
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+
+# Pliki wykonywalne
+*.exe
+*.dll
+*.app
+*.dylib
+*.so
+
+# Pliki IDE/Systemowe (opcjonalnie)
+.DS_Store
+Thumbs.db

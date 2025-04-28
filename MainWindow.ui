@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>768</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Monitor Jakości Powietrza</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+/* === Global === */
+QMainWindow {
+    background-color: rgb(65, 90, 120); /* Główny kolor tła - ciemniejszy niebiesko-szary */
+}
+QWidget { color: rgb(230, 230, 230); }
+/* === Etykiety === */
+QLabel { background-color: transparent; color: rgb(230, 230, 230); padding: 2px; }
+/* === Przyciski === */
+QPushButton { background-color: rgb(110, 130, 160); color: white; border: 1px solid rgb(140, 160, 190); padding: 6px 12px; min-width: 100px; border-radius: 3px; }
+QPushButton:hover { background-color: rgb(125, 145, 175); border: 1px solid rgb(160, 180, 210); }
+QPushButton:pressed { background-color: rgb(95, 115, 145); }
+QPushButton:disabled { background-color: rgb(90, 100, 120); color: rgb(160, 160, 160); border: 1px solid rgb(110, 120, 140); }
+/* === Pola wprowadzania i listy === */
+QLineEdit, QListWidget, QDateTimeEdit { background-color: rgb(245, 245, 250); color: black; border: 1px solid rgb(180, 190, 210); padding: 4px; border-radius: 3px; }
+QListWidget { alternate-background-color: rgb(235, 240, 245); }
+QListWidget::item:selected { background-color: rgb(100, 130, 170); color: white; }
+/* === GroupBoxy === */
+QGroupBox { background-color: rgba(255, 255, 255, 30); border: 1px solid rgba(255, 255, 255, 50); margin-top: 15px; padding: 10px; border-radius: 5px; }
+QGroupBox::title { subcontrol-origin: margin; subcontrol-position: top left; padding: 0 8px 0 8px; left: 10px; color: white; font-weight: bold; background-color: rgba(80, 110, 140, 180); border-radius: 3px; }
+QGroupBox QLabel { color: rgb(230, 230, 230); background-color: transparent; }
+#aqiOverallLabel { font-weight: bold; color: white; }
+/* === Splitter === */
+QSplitter::handle { background-color: rgb(90, 115, 145); border: 1px solid rgb(110, 135, 165); }
+QSplitter::handle:horizontal { width: 6px; }
+QSplitter::handle:vertical { height: 6px; }
+QSplitter::handle:hover { background-color: rgb(105, 130, 160); }
+/* === MenuBar i StatusBar === */
+QMenuBar { background-color: rgb(50, 70, 95); color: rgb(220, 220, 220); }
+QMenuBar::item { background-color: transparent; padding: 4px 10px; }
+QMenuBar::item:selected { background-color: rgb(80, 100, 130); }
+QMenu { background-color: rgb(240, 245, 250); color: black; border: 1px solid rgb(150, 170, 200); }
+QMenu::item:selected { background-color: rgb(180, 195, 220); }
+QStatusBar { background-color: rgb(50, 70, 95); color: rgb(200, 200, 200); }
+/* === Placeholder Wykresu === */
+#chartPlaceholderWidget { background-color: rgba(0, 0, 0, 20); border: 1px dashed rgba(255, 255, 255, 80); border-radius: 3px; }
+#chartPlaceholderLabel { color: rgb(180, 190, 200); background-color: transparent; }
+
+/* === Styl dla QScrollArea (opcjonalne) === */
+QScrollArea {
+    border: none; /* Usuń ramkę domyślną scroll area */
+    background-color: transparent; /* Niech tło QMainWindow prześwituje */
+}
+/* Styl dla zawartości scroll area (ważne tło!) */
+#scrollAreaWidgetContents {
+    background-color: rgb(65, 90, 120); /* Nadaj tło takie jak QMainWindow */
+}
+   </string>
+  </property>
+  <widget class="QScrollArea" name="centralwidget">
+   <property name="verticalScrollBarPolicy">
+    <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+   </property>
+   <property name="horizontalScrollBarPolicy">
+    <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+   </property>
+   <property name="widgetResizable">
+    <bool>true</bool>
+   </property>
+   <widget class="QWidget" name="scrollAreaWidgetContents">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1024</width>
+      <height>726</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_Main">
+     <property name="spacing">
+      <number>10</number>
+     </property>
+     <property name="leftMargin">
+      <number>10</number>
+     </property>
+     <property name="topMargin">
+      <number>10</number>
+     </property>
+     <property name="rightMargin">
+      <number>10</number>
+     </property>
+     <property name="bottomMargin">
+      <number>10</number>
+     </property>
+     <item>
+      <widget class="QWidget" name="topButtonWidget" native="true">
+       <layout class="QHBoxLayout" name="horizontalLayout_TopButtons">
+        <property name="spacing">
+         <number>10</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="fetchStationsButton">
+          <property name="text">
+           <string>Pobierz listę stacji</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="saveStationsButton">
+          <property name="text">
+           <string>Zapisz stacje</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="loadStationsButton">
+          <property name="text">
+           <string>Wczytaj stacje</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_Top">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSplitter" name="mainSplitter">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>1</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="childrenCollapsible">
+        <bool>false</bool>
+       </property>
+       <widget class="QWidget" name="leftPaneWidget" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout_Left">
+         <property name="spacing">
+          <number>8</number>
+         </property>
+         <item alignment="Qt::AlignmentFlag::AlignLeft">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Miejscowość</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="cityFilterLineEdit">
+           <property name="placeholderText">
+            <string>Wpisz miasto...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="clearCityFilterButton">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Pokaż wszystkie</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_Stations">
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Stacje pomiarowe:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListWidget" name="stationsListWidget">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>1</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_Sensors">
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Czujniki (stanowiska):</string>
+           </property>
+          </widget>
+         </item>
+         <item alignment="Qt::AlignmentFlag::AlignBottom">
+          <widget class="QListWidget" name="sensorsListWidget">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>470</width>
+             <height>192</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="saveSensorDataButton">
+           <property name="text">
+            <string>Zapisz dane czujnika</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="loadSensorDataButton">
+           <property name="text">
+            <string>Wczytaj dane czujnika</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="rightPaneWidget" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout_Right">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QGroupBox" name="aqiGroupBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="title">
+            <string>Indeks jakości powietrza</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_AQI">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="aqiStationLabel">
+              <property name="text">
+               <string>Indeks dla:</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="aqiCalcDateLabel">
+              <property name="text">
+               <string>Obliczony:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="aqiOverallLabel">
+              <property name="text">
+               <string>Ogólny:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="Line" name="line_aqi_sep">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="aqiPM10Label">
+              <property name="text">
+               <string>PM10:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="aqiPM25Label">
+              <property name="text">
+               <string>PM2.5:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="aqiO3Label">
+              <property name="text">
+               <string>O3:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="aqiNO2Label">
+              <property name="text">
+               <string>NO2:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="aqiSO2Label">
+              <property name="text">
+               <string>SO2:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="aqiCOLabel">
+              <property name="text">
+               <string>CO:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="aqiC6H6Label">
+              <property name="text">
+               <string>C6H6:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_AQI">
+              <property name="orientation">
+               <enum>Qt::Orientation::Vertical</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Policy::Expanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>5</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="chartGroupBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>1</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="title">
+            <string>Wykres danych pomiarowych</string>
+           </property>
+           <layout class="QVBoxLayout" name="chartLayout">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <property name="spacing">
+               <number>6</number>
+              </property>
+              <item alignment="Qt::AlignmentFlag::AlignLeft">
+               <widget class="QLabel" name="label_2">
+                <property name="text">
+                 <string>Od:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDateTimeEdit" name="startDateTimeEdit"/>
+              </item>
+              <item alignment="Qt::AlignmentFlag::AlignLeft">
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Do:</string>
+                </property>
+                <property name="leftMargin" stdset="0">
+                 <number>10</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDateTimeEdit" name="endDateTimeEdit"/>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_Dates">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>10</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPushButton" name="filterDataButton">
+              <property name="text">
+               <string>Filtruj wykres</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="analyzeButton">
+           <property name="text">
+            <string>Analizuj wykres</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="analysisGroupBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="title">
+            <string>Analiza wykresu</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_Analysis">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="analysisMinLabel">
+              <property name="text">
+               <string>Min:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="analysisMaxLabel">
+              <property name="text">
+               <string>Max:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="analysisAvgLabel">
+              <property name="text">
+               <string>Średnia:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="analysisTrendLabel">
+              <property name="text">
+               <string>Trend:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_Analysis">
+              <property name="orientation">
+               <enum>Qt::Orientation::Vertical</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Policy::Expanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>5</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

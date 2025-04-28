@@ -1,0 +1,54 @@
+\doxysection{Dokumentacja klasy Main\+Window}
+\hypertarget{class_main_window}{}\label{class_main_window}\index{MainWindow@{MainWindow}}
+
+
+Główne okno aplikacji, zarządzające interfejsem użytkownika i koordynujące przepływ danych.  
+
+
+
+
+{\ttfamily \#include $<$Main\+Window.\+h$>$}
+
+Diagram dziedziczenia dla Main\+Window\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_main_window}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Metody publiczne}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_main_window_a996c5a2b6f77944776856f08ec30858d}{Main\+Window}} (QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Konstruktor głównego okna aplikacji. \end{DoxyCompactList}\item 
+\Hypertarget{class_main_window_ae98d00a93bc118200eeef9f9bba1dba7}\label{class_main_window_ae98d00a93bc118200eeef9f9bba1dba7} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Main\+Window} ()
+\begin{DoxyCompactList}\small\item\em Destruktor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Opis szczegółowy}
+Główne okno aplikacji, zarządzające interfejsem użytkownika i koordynujące przepływ danych. 
+
+Odpowiada za wyświetlanie list stacji i czujników, inicjowanie pobierania danych (przez \doxylink{class_api_service}{Api\+Service}), zapis/odczyt danych z lokalnego magazynu (przez \doxylink{class_data_storage}{Data\+Storage}), prezentację danych pomiarowych na wykresie (Qt\+Charts), wyświetlanie indeksu jakości powietrza (AQI) oraz wyników prostej analizy danych (przez \doxylink{class_data_analyzer}{Data\+Analyzer}). Obsługuje również interakcje użytkownika (kliknięcia przycisków, wybór elementów list, filtrowanie). 
+
+\doxysubsection{Dokumentacja konstruktora i destruktora}
+\Hypertarget{class_main_window_a996c5a2b6f77944776856f08ec30858d}\index{MainWindow@{MainWindow}!MainWindow@{MainWindow}}
+\index{MainWindow@{MainWindow}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{MainWindow()}{MainWindow()}}
+{\footnotesize\ttfamily \label{class_main_window_a996c5a2b6f77944776856f08ec30858d} 
+Main\+Window\+::\+Main\+Window (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})}
+
+
+
+Konstruktor głównego okna aplikacji. 
+
+
+\begin{DoxyParams}{Parametry}
+{\em parent} & Wskaźnik na widget nadrzędny (zazwyczaj nullptr). \\
+\hline
+\end{DoxyParams}
+
+
+Dokumentacja dla tej klasy została wygenerowana z plików\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_main_window_8h}{Main\+Window.\+h}}\item 
+Main\+Window.\+cpp\end{DoxyCompactItemize}

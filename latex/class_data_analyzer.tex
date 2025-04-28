@@ -1,0 +1,54 @@
+\doxysection{Dokumentacja klasy Data\+Analyzer}
+\hypertarget{class_data_analyzer}{}\label{class_data_analyzer}\index{DataAnalyzer@{DataAnalyzer}}
+
+
+Klasa odpowiedzialna za przeprowadzanie prostej analizy statystycznej danych pomiarowych.  
+
+
+
+
+{\ttfamily \#include $<$Data\+Analyzer.\+h$>$}
+
+\doxysubsubsection*{Metody publiczne}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_data_analyzer_a721e937aa7bf526d550e1235bd20d710}\label{class_data_analyzer_a721e937aa7bf526d550e1235bd20d710} 
+{\bfseries Data\+Analyzer} ()
+\begin{DoxyCompactList}\small\item\em Domyślny konstruktor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_analysis_result}{Analysis\+Result}} \mbox{\hyperlink{class_data_analyzer_acb9c7de17ec4f54d801860be70515d50}{analyze}} (const std\+::vector$<$ \mbox{\hyperlink{struct_measurement_value}{Measurement\+Value}} $>$ \&values)
+\begin{DoxyCompactList}\small\item\em Analizuje podany wektor danych pomiarowych. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Opis szczegółowy}
+Klasa odpowiedzialna za przeprowadzanie prostej analizy statystycznej danych pomiarowych. 
+
+Główna metoda {\ttfamily analyze} przyjmuje wektor {\ttfamily \doxylink{struct_measurement_value}{Measurement\+Value}} i zwraca obiekt {\ttfamily \doxylink{struct_analysis_result}{Analysis\+Result}}. Analiza obejmuje filtrowanie nieprawidłowych danych (NaN), obliczenie min/max, średniej oraz trendu. 
+
+\doxysubsection{Dokumentacja funkcji składowych}
+\Hypertarget{class_data_analyzer_acb9c7de17ec4f54d801860be70515d50}\index{DataAnalyzer@{DataAnalyzer}!analyze@{analyze}}
+\index{analyze@{analyze}!DataAnalyzer@{DataAnalyzer}}
+\doxysubsubsection{\texorpdfstring{analyze()}{analyze()}}
+{\footnotesize\ttfamily \label{class_data_analyzer_acb9c7de17ec4f54d801860be70515d50} 
+\mbox{\hyperlink{struct_analysis_result}{Analysis\+Result}} Data\+Analyzer\+::analyze (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_measurement_value}{Measurement\+Value}} $>$ \&}]{values}{}\end{DoxyParamCaption})}
+
+
+
+Analizuje podany wektor danych pomiarowych. 
+
+
+\begin{DoxyParams}{Parametry}
+{\em values} & Wektor obiektów \doxylink{struct_measurement_value}{Measurement\+Value} do analizy. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Zwraca}
+Obiekt \doxylink{struct_analysis_result}{Analysis\+Result} zawierający wyniki analizy (min, max, średnia, trend). 
+\end{DoxyReturn}
+\begin{DoxyNote}{Nota}
+Wartości NaN oraz wpisy z nieprawidłową datą są ignorowane podczas obliczeń. Trend jest obliczany tylko jeśli dostępne są co najmniej 2 prawidłowe punkty danych. 
+\end{DoxyNote}
+
+
+Dokumentacja dla tej klasy została wygenerowana z plików\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_data_analyzer_8h}{Data\+Analyzer.\+h}}\item 
+Data\+Analyzer.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,74 @@
+\doxysection{Data\+Storage.\+h}
+\hypertarget{_data_storage_8h_source}{}\label{_data_storage_8h_source}\mbox{\hyperlink{_data_storage_8h}{Idź do dokumentacji tego pliku.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ DATASTORAGE\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ DATASTORAGE\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <QString>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_data_structures_8h}{DataStructures.h}}"{}}\ \textcolor{comment}{//\ Potrzebne\ struktury\ danych}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }QJsonObject;}
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }QJsonArray;}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_data_storage_ac10ee70a0853fceced9609e2d44cf358}{DataStorage}}}
+\DoxyCodeLine{00024\ \{}
+\DoxyCodeLine{00025\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{class_data_storage_ac10ee70a0853fceced9609e2d44cf358}{DataStorage}}(\textcolor{keyword}{const}\ QString\&\ storagePath\ =\ \textcolor{stringliteral}{"{}."{}});}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_data_storage_ab0954d8c62c4120954147fe6d7077c94}{saveStationsToJson}}(\textcolor{keyword}{const}\ std::vector<MeasuringStation>\&\ stations,\ \textcolor{keyword}{const}\ QString\&\ filename\ =\ \textcolor{stringliteral}{"{}stations.json"{}});}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00046\ \ \ \ \ std::vector<MeasuringStation>\ \mbox{\hyperlink{class_data_storage_ae903764f3730d037a6cd273d8fbd61cc}{loadStationsFromJson}}(\textcolor{keyword}{const}\ QString\&\ filename\ =\ \textcolor{stringliteral}{"{}stations.json"{}});}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_data_storage_a6f1dc14e6bfbf0655f21f80c20ab3e4f}{saveSensorDataToJson}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_sensor_data}{SensorData}}\&\ data,\ \textcolor{keyword}{const}\ QString\&\ filename);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00061\ \ \ \ \ \mbox{\hyperlink{struct_sensor_data}{SensorData}}\ \mbox{\hyperlink{class_data_storage_a7e23042a00d400cb5f92d8721dd46583}{loadSensorDataFromJson}}(\textcolor{keyword}{const}\ QString\&\ filename);}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_data_storage_a7e818e296a7b183b09ba2e0f0174c634}{saveSensorsToJson}}(\textcolor{keywordtype}{int}\ stationId,\ \textcolor{keyword}{const}\ std::vector<Sensor>\&\ sensors);}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00079\ \ \ \ \ std::vector<Sensor>\ \mbox{\hyperlink{class_data_storage_a57c447da9603cf6f489175fafeb9ede5}{loadSensorsFromJson}}(\textcolor{keywordtype}{int}\ stationId);}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_data_storage_a278d2ddc481f0b7e2b0589ecd722dce2}{saveAirQualityIndexToJson}}(\textcolor{keywordtype}{int}\ stationId,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_air_quality_index}{AirQualityIndex}}\&\ index);}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00097\ \ \ \ \ \mbox{\hyperlink{struct_air_quality_index}{AirQualityIndex}}\ \mbox{\hyperlink{class_data_storage_a70f13769e9b62c96d131033ba4e960ab}{loadAirQualityIndexFromJson}}(\textcolor{keywordtype}{int}\ stationId);}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00103\ \ \ \ \ QString\ \mbox{\hyperlink{class_data_storage_aad38442b4ab76137dee4ebb153a871d1}{getStoragePath}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00107\ \ \ \ \ QString\ m\_storagePath;}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Prywatne\ metody\ pomocnicze\ do\ konwersji\ na/z\ QJsonObject\ -\/-\/-\/}}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{comment}{//\ (Dokumentacja\ dla\ nich\ może\ być\ mniej\ szczegółowa\ lub\ pominięta,\ jeśli\ są\ proste)}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00113\ \ \ \ \ QJsonObject\ stationToJson(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_measuring_station}{MeasuringStation}}\&\ station);}
+\DoxyCodeLine{00115\ \ \ \ \ \mbox{\hyperlink{struct_measuring_station}{MeasuringStation}}\ stationFromJson(\textcolor{keyword}{const}\ QJsonObject\&\ obj);}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00118\ \ \ \ \ QJsonObject\ sensorDataToJson(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_sensor_data}{SensorData}}\&\ data);}
+\DoxyCodeLine{00120\ \ \ \ \ \mbox{\hyperlink{struct_sensor_data}{SensorData}}\ sensorDataFromJson(\textcolor{keyword}{const}\ QJsonObject\&\ obj);}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00123\ \ \ \ \ QJsonObject\ cityToJson(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_city}{City}}\&\ city);}
+\DoxyCodeLine{00125\ \ \ \ \ \mbox{\hyperlink{struct_city}{City}}\ cityFromJson(\textcolor{keyword}{const}\ QJsonObject\&\ obj);}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00128\ \ \ \ \ QJsonObject\ communeToJson(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_commune}{Commune}}\&\ commune);}
+\DoxyCodeLine{00130\ \ \ \ \ \mbox{\hyperlink{struct_commune}{Commune}}\ communeFromJson(\textcolor{keyword}{const}\ QJsonObject\&\ obj);}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00133\ \ \ \ \ QJsonObject\ measurementValueToJson(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_measurement_value}{MeasurementValue}}\&\ mv);}
+\DoxyCodeLine{00135\ \ \ \ \ \mbox{\hyperlink{struct_measurement_value}{MeasurementValue}}\ measurementValueFromJson(\textcolor{keyword}{const}\ QJsonObject\&\ obj);}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00138\ \ \ \ \ QJsonObject\ sensorToJson(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_sensor}{Sensor}}\&\ sensor);}
+\DoxyCodeLine{00140\ \ \ \ \ \mbox{\hyperlink{struct_sensor}{Sensor}}\ sensorFromJson(\textcolor{keyword}{const}\ QJsonObject\&\ obj);}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00143\ \ \ \ \ QJsonObject\ parameterToJson(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_parameter}{Parameter}}\&\ param);}
+\DoxyCodeLine{00145\ \ \ \ \ \mbox{\hyperlink{struct_parameter}{Parameter}}\ parameterFromJson(\textcolor{keyword}{const}\ QJsonObject\&\ obj);}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00148\ \ \ \ \ QJsonObject\ indexLevelToJson(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_index_level}{IndexLevel}}\&\ level);}
+\DoxyCodeLine{00150\ \ \ \ \ \mbox{\hyperlink{struct_index_level}{IndexLevel}}\ indexLevelFromJson(\textcolor{keyword}{const}\ QJsonObject\&\ obj);}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00153\ \ \ \ \ QJsonObject\ airQualityIndexToJson(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_air_quality_index}{AirQualityIndex}}\&\ index);}
+\DoxyCodeLine{00155\ \ \ \ \ \mbox{\hyperlink{struct_air_quality_index}{AirQualityIndex}}\ airQualityIndexFromJson(\textcolor{keyword}{const}\ QJsonObject\&\ obj);}
+\DoxyCodeLine{00156\ \};}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ DATASTORAGE\_H}}
+
+\end{DoxyCode}

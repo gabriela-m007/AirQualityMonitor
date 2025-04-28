@@ -1,0 +1,234 @@
+\doxysection{Dokumentacja klasy Data\+Storage}
+\hypertarget{class_data_storage}{}\label{class_data_storage}\index{DataStorage@{DataStorage}}
+
+
+Zapewnia mechanizmy do trwałego przechowywania danych aplikacji (stacje, czujniki, dane pomiarowe, AQI) w plikach JSON.  
+
+
+
+
+{\ttfamily \#include $<$Data\+Storage.\+h$>$}
+
+\doxysubsubsection*{Metody publiczne}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_data_storage_ac10ee70a0853fceced9609e2d44cf358}{Data\+Storage}} (const QString \&storage\+Path="{}."{})
+\begin{DoxyCompactList}\small\item\em Konstruktor klasy \doxylink{class_data_storage}{Data\+Storage}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_data_storage_ab0954d8c62c4120954147fe6d7077c94}{save\+Stations\+To\+Json}} (const std\+::vector$<$ \mbox{\hyperlink{struct_measuring_station}{Measuring\+Station}} $>$ \&stations, const QString \&filename="{}stations.\+json"{})
+\begin{DoxyCompactList}\small\item\em Zapisuje wektor stacji pomiarowych do pliku JSON. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_measuring_station}{Measuring\+Station}} $>$ \mbox{\hyperlink{class_data_storage_ae903764f3730d037a6cd273d8fbd61cc}{load\+Stations\+From\+Json}} (const QString \&filename="{}stations.\+json"{})
+\begin{DoxyCompactList}\small\item\em Wczytuje wektor stacji pomiarowych z pliku JSON. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_data_storage_a6f1dc14e6bfbf0655f21f80c20ab3e4f}{save\+Sensor\+Data\+To\+Json}} (const \mbox{\hyperlink{struct_sensor_data}{Sensor\+Data}} \&data, const QString \&filename)
+\begin{DoxyCompactList}\small\item\em Zapisuje dane pomiarowe (\doxylink{struct_sensor_data}{Sensor\+Data}) dla konkretnego czujnika do pliku JSON. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_sensor_data}{Sensor\+Data}} \mbox{\hyperlink{class_data_storage_a7e23042a00d400cb5f92d8721dd46583}{load\+Sensor\+Data\+From\+Json}} (const QString \&filename)
+\begin{DoxyCompactList}\small\item\em Wczytuje dane pomiarowe (\doxylink{struct_sensor_data}{Sensor\+Data}) z pliku JSON. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_data_storage_a7e818e296a7b183b09ba2e0f0174c634}{save\+Sensors\+To\+Json}} (int station\+Id, const std\+::vector$<$ \mbox{\hyperlink{struct_sensor}{Sensor}} $>$ \&sensors)
+\begin{DoxyCompactList}\small\item\em Zapisuje wektor czujników dla konkretnej stacji do pliku JSON. Nazwa pliku jest generowana automatycznie jako "{}station\+\_\+\{station\+Id\}\+\_\+sensors.\+json"{}. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_sensor}{Sensor}} $>$ \mbox{\hyperlink{class_data_storage_a57c447da9603cf6f489175fafeb9ede5}{load\+Sensors\+From\+Json}} (int station\+Id)
+\begin{DoxyCompactList}\small\item\em Wczytuje wektor czujników dla konkretnej stacji z pliku JSON. Nazwa pliku jest generowana automatycznie jako "{}station\+\_\+\{station\+Id\}\+\_\+sensors.\+json"{}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_data_storage_a278d2ddc481f0b7e2b0589ecd722dce2}{save\+Air\+Quality\+Index\+To\+Json}} (int station\+Id, const \mbox{\hyperlink{struct_air_quality_index}{Air\+Quality\+Index}} \&index)
+\begin{DoxyCompactList}\small\item\em Zapisuje indeks jakości powietrza (AQI) dla konkretnej stacji do pliku JSON. Nazwa pliku jest generowana automatycznie jako "{}station\+\_\+\{station\+Id\}\+\_\+aqi.\+json"{}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_air_quality_index}{Air\+Quality\+Index}} \mbox{\hyperlink{class_data_storage_a70f13769e9b62c96d131033ba4e960ab}{load\+Air\+Quality\+Index\+From\+Json}} (int station\+Id)
+\begin{DoxyCompactList}\small\item\em Wczytuje indeks jakości powietrza (AQI) dla konkretnej stacji z pliku JSON. Nazwa pliku jest generowana automatycznie jako "{}station\+\_\+\{station\+Id\}\+\_\+aqi.\+json"{}. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_data_storage_aad38442b4ab76137dee4ebb153a871d1}{get\+Storage\+Path}} () const
+\begin{DoxyCompactList}\small\item\em Zwraca aktualnie używaną ścieżkę do katalogu przechowywania danych. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Opis szczegółowy}
+Zapewnia mechanizmy do trwałego przechowywania danych aplikacji (stacje, czujniki, dane pomiarowe, AQI) w plikach JSON. 
+
+Umożliwia zapisywanie i wczytywanie danych, co pozwala na działanie aplikacji w trybie offline lub jako fallback w przypadku problemów z dostępem do API. Pliki są zapisywane w określonym katalogu przechowywania ({\ttfamily storage\+Path}). 
+
+\doxysubsection{Dokumentacja konstruktora i destruktora}
+\Hypertarget{class_data_storage_ac10ee70a0853fceced9609e2d44cf358}\index{DataStorage@{DataStorage}!DataStorage@{DataStorage}}
+\index{DataStorage@{DataStorage}!DataStorage@{DataStorage}}
+\doxysubsubsection{\texorpdfstring{DataStorage()}{DataStorage()}}
+{\footnotesize\ttfamily \label{class_data_storage_ac10ee70a0853fceced9609e2d44cf358} 
+Data\+Storage\+::\+Data\+Storage (\begin{DoxyParamCaption}\item[{const QString \&}]{storage\+Path}{ = {\ttfamily "{}."{}}}\end{DoxyParamCaption})}
+
+
+
+Konstruktor klasy \doxylink{class_data_storage}{Data\+Storage}. 
+
+
+\begin{DoxyParams}{Parametry}
+{\em storage\+Path} & Ścieżka do katalogu, w którym będą przechowywane pliki JSON. Domyślnie bieżący katalog ("{}."{}) Jeśli katalog nie istnieje, próbuje go utworzyć. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Dokumentacja funkcji składowych}
+\Hypertarget{class_data_storage_aad38442b4ab76137dee4ebb153a871d1}\index{DataStorage@{DataStorage}!getStoragePath@{getStoragePath}}
+\index{getStoragePath@{getStoragePath}!DataStorage@{DataStorage}}
+\doxysubsubsection{\texorpdfstring{getStoragePath()}{getStoragePath()}}
+{\footnotesize\ttfamily \label{class_data_storage_aad38442b4ab76137dee4ebb153a871d1} 
+QString Data\+Storage\+::get\+Storage\+Path (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Zwraca aktualnie używaną ścieżkę do katalogu przechowywania danych. 
+
+\begin{DoxyReturn}{Zwraca}
+Ścieżka do katalogu jako QString. 
+\end{DoxyReturn}
+\Hypertarget{class_data_storage_a70f13769e9b62c96d131033ba4e960ab}\index{DataStorage@{DataStorage}!loadAirQualityIndexFromJson@{loadAirQualityIndexFromJson}}
+\index{loadAirQualityIndexFromJson@{loadAirQualityIndexFromJson}!DataStorage@{DataStorage}}
+\doxysubsubsection{\texorpdfstring{loadAirQualityIndexFromJson()}{loadAirQualityIndexFromJson()}}
+{\footnotesize\ttfamily \label{class_data_storage_a70f13769e9b62c96d131033ba4e960ab} 
+\mbox{\hyperlink{struct_air_quality_index}{Air\+Quality\+Index}} Data\+Storage\+::load\+Air\+Quality\+Index\+From\+Json (\begin{DoxyParamCaption}\item[{int}]{station\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Wczytuje indeks jakości powietrza (AQI) dla konkretnej stacji z pliku JSON. Nazwa pliku jest generowana automatycznie jako "{}station\+\_\+\{station\+Id\}\+\_\+aqi.\+json"{}. 
+
+
+\begin{DoxyParams}{Parametry}
+{\em station\+Id} & ID stacji, której indeks ma zostać wczytany. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Zwraca}
+Obiekt \doxylink{struct_air_quality_index}{Air\+Quality\+Index}. Zwraca domyślny obiekt (z {\ttfamily station\+Id = -\/1}), jeśli plik nie istnieje, jest nieprawidłowy, {\ttfamily station\+Id} jest nieprawidłowe, lub ID stacji w pliku nie zgadza się z podanym {\ttfamily station\+Id}. 
+\end{DoxyReturn}
+\Hypertarget{class_data_storage_a7e23042a00d400cb5f92d8721dd46583}\index{DataStorage@{DataStorage}!loadSensorDataFromJson@{loadSensorDataFromJson}}
+\index{loadSensorDataFromJson@{loadSensorDataFromJson}!DataStorage@{DataStorage}}
+\doxysubsubsection{\texorpdfstring{loadSensorDataFromJson()}{loadSensorDataFromJson()}}
+{\footnotesize\ttfamily \label{class_data_storage_a7e23042a00d400cb5f92d8721dd46583} 
+\mbox{\hyperlink{struct_sensor_data}{Sensor\+Data}} Data\+Storage\+::load\+Sensor\+Data\+From\+Json (\begin{DoxyParamCaption}\item[{const QString \&}]{filename}{}\end{DoxyParamCaption})}
+
+
+
+Wczytuje dane pomiarowe (\doxylink{struct_sensor_data}{Sensor\+Data}) z pliku JSON. 
+
+
+\begin{DoxyParams}{Parametry}
+{\em filename} & Nazwa pliku JSON (względem {\ttfamily storage\+Path}). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Zwraca}
+Obiekt \doxylink{struct_sensor_data}{Sensor\+Data}. Zwraca domyślny (pusty) obiekt, jeśli plik nie istnieje lub jest nieprawidłowy. 
+\end{DoxyReturn}
+\Hypertarget{class_data_storage_a57c447da9603cf6f489175fafeb9ede5}\index{DataStorage@{DataStorage}!loadSensorsFromJson@{loadSensorsFromJson}}
+\index{loadSensorsFromJson@{loadSensorsFromJson}!DataStorage@{DataStorage}}
+\doxysubsubsection{\texorpdfstring{loadSensorsFromJson()}{loadSensorsFromJson()}}
+{\footnotesize\ttfamily \label{class_data_storage_a57c447da9603cf6f489175fafeb9ede5} 
+std\+::vector$<$ \mbox{\hyperlink{struct_sensor}{Sensor}} $>$ Data\+Storage\+::load\+Sensors\+From\+Json (\begin{DoxyParamCaption}\item[{int}]{station\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Wczytuje wektor czujników dla konkretnej stacji z pliku JSON. Nazwa pliku jest generowana automatycznie jako "{}station\+\_\+\{station\+Id\}\+\_\+sensors.\+json"{}. 
+
+
+\begin{DoxyParams}{Parametry}
+{\em station\+Id} & ID stacji, której czujniki mają zostać wczytane. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Zwraca}
+Wektor obiektów \doxylink{struct_sensor}{Sensor}. Zwraca pusty wektor, jeśli plik nie istnieje, jest nieprawidłowy, lub {\ttfamily station\+Id} jest nieprawidłowe. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Nota}
+Odfiltrowuje czujniki wczytane z pliku, które mają niezgodny {\ttfamily station\+Id}. 
+\end{DoxyNote}
+\Hypertarget{class_data_storage_ae903764f3730d037a6cd273d8fbd61cc}\index{DataStorage@{DataStorage}!loadStationsFromJson@{loadStationsFromJson}}
+\index{loadStationsFromJson@{loadStationsFromJson}!DataStorage@{DataStorage}}
+\doxysubsubsection{\texorpdfstring{loadStationsFromJson()}{loadStationsFromJson()}}
+{\footnotesize\ttfamily \label{class_data_storage_ae903764f3730d037a6cd273d8fbd61cc} 
+std\+::vector$<$ \mbox{\hyperlink{struct_measuring_station}{Measuring\+Station}} $>$ Data\+Storage\+::load\+Stations\+From\+Json (\begin{DoxyParamCaption}\item[{const QString \&}]{filename}{ = {\ttfamily "{}stations.json"{}}}\end{DoxyParamCaption})}
+
+
+
+Wczytuje wektor stacji pomiarowych z pliku JSON. 
+
+
+\begin{DoxyParams}{Parametry}
+{\em filename} & Nazwa pliku JSON (względem {\ttfamily storage\+Path}). Domyślnie "{}stations.\+json"{}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Zwraca}
+Wektor obiektów \doxylink{struct_measuring_station}{Measuring\+Station}. Zwraca pusty wektor, jeśli plik nie istnieje, jest nieprawidłowy lub pusty. 
+\end{DoxyReturn}
+\Hypertarget{class_data_storage_a278d2ddc481f0b7e2b0589ecd722dce2}\index{DataStorage@{DataStorage}!saveAirQualityIndexToJson@{saveAirQualityIndexToJson}}
+\index{saveAirQualityIndexToJson@{saveAirQualityIndexToJson}!DataStorage@{DataStorage}}
+\doxysubsubsection{\texorpdfstring{saveAirQualityIndexToJson()}{saveAirQualityIndexToJson()}}
+{\footnotesize\ttfamily \label{class_data_storage_a278d2ddc481f0b7e2b0589ecd722dce2} 
+bool Data\+Storage\+::save\+Air\+Quality\+Index\+To\+Json (\begin{DoxyParamCaption}\item[{int}]{station\+Id}{, }\item[{const \mbox{\hyperlink{struct_air_quality_index}{Air\+Quality\+Index}} \&}]{index}{}\end{DoxyParamCaption})}
+
+
+
+Zapisuje indeks jakości powietrza (AQI) dla konkretnej stacji do pliku JSON. Nazwa pliku jest generowana automatycznie jako "{}station\+\_\+\{station\+Id\}\+\_\+aqi.\+json"{}. 
+
+
+\begin{DoxyParams}{Parametry}
+{\em station\+Id} & ID stacji, której dotyczy indeks. Musi być zgodne z {\ttfamily index.\+station\+Id}. \\
+\hline
+{\em index} & Obiekt \doxylink{struct_air_quality_index}{Air\+Quality\+Index} do zapisania. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Zwraca}
+{\ttfamily true} jeśli zapis się powiódł, {\ttfamily false} jeśli ID są nieprawidłowe/niezgodne lub wystąpił błąd zapisu. 
+\end{DoxyReturn}
+\Hypertarget{class_data_storage_a6f1dc14e6bfbf0655f21f80c20ab3e4f}\index{DataStorage@{DataStorage}!saveSensorDataToJson@{saveSensorDataToJson}}
+\index{saveSensorDataToJson@{saveSensorDataToJson}!DataStorage@{DataStorage}}
+\doxysubsubsection{\texorpdfstring{saveSensorDataToJson()}{saveSensorDataToJson()}}
+{\footnotesize\ttfamily \label{class_data_storage_a6f1dc14e6bfbf0655f21f80c20ab3e4f} 
+bool Data\+Storage\+::save\+Sensor\+Data\+To\+Json (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_sensor_data}{Sensor\+Data}} \&}]{data}{, }\item[{const QString \&}]{filename}{}\end{DoxyParamCaption})}
+
+
+
+Zapisuje dane pomiarowe (\doxylink{struct_sensor_data}{Sensor\+Data}) dla konkretnego czujnika do pliku JSON. 
+
+
+\begin{DoxyParams}{Parametry}
+{\em data} & Obiekt \doxylink{struct_sensor_data}{Sensor\+Data} do zapisania. \\
+\hline
+{\em filename} & Nazwa pliku JSON (względem {\ttfamily storage\+Path}). Nazwa powinna identyfikować czujnik (np. "{}sensor\+\_\+123\+\_\+data.\+json"{}). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Zwraca}
+{\ttfamily true} jeśli zapis się powiódł, {\ttfamily false} jeśli {\ttfamily data.\+key} jest pusty lub wystąpił błąd zapisu. 
+\end{DoxyReturn}
+\Hypertarget{class_data_storage_a7e818e296a7b183b09ba2e0f0174c634}\index{DataStorage@{DataStorage}!saveSensorsToJson@{saveSensorsToJson}}
+\index{saveSensorsToJson@{saveSensorsToJson}!DataStorage@{DataStorage}}
+\doxysubsubsection{\texorpdfstring{saveSensorsToJson()}{saveSensorsToJson()}}
+{\footnotesize\ttfamily \label{class_data_storage_a7e818e296a7b183b09ba2e0f0174c634} 
+bool Data\+Storage\+::save\+Sensors\+To\+Json (\begin{DoxyParamCaption}\item[{int}]{station\+Id}{, }\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_sensor}{Sensor}} $>$ \&}]{sensors}{}\end{DoxyParamCaption})}
+
+
+
+Zapisuje wektor czujników dla konkretnej stacji do pliku JSON. Nazwa pliku jest generowana automatycznie jako "{}station\+\_\+\{station\+Id\}\+\_\+sensors.\+json"{}. 
+
+
+\begin{DoxyParams}{Parametry}
+{\em station\+Id} & ID stacji, której dotyczą czujniki. \\
+\hline
+{\em sensors} & Wektor obiektów \doxylink{struct_sensor}{Sensor} do zapisania. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Zwraca}
+{\ttfamily true} jeśli zapis się powiódł, {\ttfamily false} jeśli {\ttfamily station\+Id} jest nieprawidłowe (\texorpdfstring{$<$}{<}=0) lub wystąpił błąd zapisu. 
+\end{DoxyReturn}
+\Hypertarget{class_data_storage_ab0954d8c62c4120954147fe6d7077c94}\index{DataStorage@{DataStorage}!saveStationsToJson@{saveStationsToJson}}
+\index{saveStationsToJson@{saveStationsToJson}!DataStorage@{DataStorage}}
+\doxysubsubsection{\texorpdfstring{saveStationsToJson()}{saveStationsToJson()}}
+{\footnotesize\ttfamily \label{class_data_storage_ab0954d8c62c4120954147fe6d7077c94} 
+bool Data\+Storage\+::save\+Stations\+To\+Json (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_measuring_station}{Measuring\+Station}} $>$ \&}]{stations}{, }\item[{const QString \&}]{filename}{ = {\ttfamily "{}stations.json"{}}}\end{DoxyParamCaption})}
+
+
+
+Zapisuje wektor stacji pomiarowych do pliku JSON. 
+
+
+\begin{DoxyParams}{Parametry}
+{\em stations} & Wektor obiektów \doxylink{struct_measuring_station}{Measuring\+Station} do zapisania. \\
+\hline
+{\em filename} & Nazwa pliku JSON (względem {\ttfamily storage\+Path}). Domyślnie "{}stations.\+json"{}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Zwraca}
+{\ttfamily true} jeśli zapis się powiódł, {\ttfamily false} w przeciwnym razie. 
+\end{DoxyReturn}
+
+
+Dokumentacja dla tej klasy została wygenerowana z plików\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_data_storage_8h}{Data\+Storage.\+h}}\item 
+Data\+Storage.\+cpp\end{DoxyCompactItemize}

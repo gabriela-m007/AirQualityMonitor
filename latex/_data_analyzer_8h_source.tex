@@ -1,0 +1,44 @@
+\doxysection{Data\+Analyzer.\+h}
+\hypertarget{_data_analyzer_8h_source}{}\label{_data_analyzer_8h_source}\mbox{\hyperlink{_data_analyzer_8h}{Idź do dokumentacji tego pliku.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ DATAANALYZER\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ DATAANALYZER\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <optional>}\ \textcolor{comment}{//\ Dla\ opcjonalnych\ wyników}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_data_structures_8h}{DataStructures.h}}"{}}\ \textcolor{comment}{//\ Potrzebuje\ MeasurementValue}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_analysis_result}{AnalysisResult}}\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ std::optional<MeasurementValue>\ \mbox{\hyperlink{struct_analysis_result_ad517ec53d8842af8f180e8d0574cf6db}{minVal}};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00030\ \ \ \ \ std::optional<MeasurementValue>\ \mbox{\hyperlink{struct_analysis_result_a3d14a47f33da0011d48818c911b941d0}{maxVal}};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00036\ \ \ \ \ std::optional<double>\ \mbox{\hyperlink{struct_analysis_result_aae0c63114f68b4b86baefa2d6189beed}{average}};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{enum}\ \mbox{\hyperlink{struct_analysis_result_ab5c24f504e88ec9da0528818416b4e23}{Trend}}\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_analysis_result_ab5c24f504e88ec9da0528818416b4e23ad8d059bf1efd724997aa5008e9aff21a}{INCREASING}},\ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_analysis_result_ab5c24f504e88ec9da0528818416b4e23a3f353aa143b73f494089e2958cc1f854}{DECREASING}},\ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_analysis_result_ab5c24f504e88ec9da0528818416b4e23a75d3f5bd86e7888beca6897416a5c2b0}{STABLE}},\ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_analysis_result_ab5c24f504e88ec9da0528818416b4e23a82187857b5446da8299d1497db2c7534}{UNKNOWN}}\ \ \ \ \ }
+\DoxyCodeLine{00047\ \ \ \ \ \};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{struct_analysis_result_ab5c24f504e88ec9da0528818416b4e23}{Trend}}\ trend\ =\ \mbox{\hyperlink{struct_analysis_result_ab5c24f504e88ec9da0528818416b4e23a82187857b5446da8299d1497db2c7534}{Trend::UNKNOWN}};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_analysis_result_aea156076af5231b55a03206221dd8243}{trendSlope}}\ =\ 0.0;}
+\DoxyCodeLine{00058\ \};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00067\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_data_analyzer_a721e937aa7bf526d550e1235bd20d710}{DataAnalyzer}}}
+\DoxyCodeLine{00068\ \{}
+\DoxyCodeLine{00069\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00073\ \ \ \ \ \mbox{\hyperlink{class_data_analyzer_a721e937aa7bf526d550e1235bd20d710}{DataAnalyzer}}();}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{struct_analysis_result}{AnalysisResult}}\ \mbox{\hyperlink{class_data_analyzer_acb9c7de17ec4f54d801860be70515d50}{analyze}}(\textcolor{keyword}{const}\ std::vector<MeasurementValue>\&\ values);}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00090\ \ \ \ \ std::vector<MeasurementValue>\ filterValidValues(\textcolor{keyword}{const}\ std::vector<MeasurementValue>\&\ values);}
+\DoxyCodeLine{00091\ \};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ DATAANALYZER\_H}}
+
+\end{DoxyCode}

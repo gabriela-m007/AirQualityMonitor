@@ -1,0 +1,31 @@
+\doxysection{Dokumentacja struktury Sensor}
+\hypertarget{struct_sensor}{}\label{struct_sensor}\index{Sensor@{Sensor}}
+
+
+Reprezentuje pojedynczy czujnik (stanowisko pomiarowe) na stacji. Odpowiada głównemu obiektowi w odpowiedzi API dla czujników stacji.  
+
+
+
+
+{\ttfamily \#include $<$Data\+Structures.\+h$>$}
+
+\doxysubsubsection*{Atrybuty publiczne}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_sensor_a234572fa1d52f50a2a3fe349022bd9bd}\label{struct_sensor_a234572fa1d52f50a2a3fe349022bd9bd} 
+int {\bfseries id} = -\/1
+\begin{DoxyCompactList}\small\item\em Unikalny identyfikator czujnika (z API, -\/1 jeśli nieznany). \end{DoxyCompactList}\item 
+\Hypertarget{struct_sensor_aca0077c550e028e9dfd7f3cd8c9911e5}\label{struct_sensor_aca0077c550e028e9dfd7f3cd8c9911e5} 
+int {\bfseries station\+Id} = -\/1
+\begin{DoxyCompactList}\small\item\em ID stacji, do której przypisany jest czujnik (-\/1 jeśli nieznany). \end{DoxyCompactList}\item 
+\Hypertarget{struct_sensor_a178d91d9edb261ba863e5d9315f9a3ec}\label{struct_sensor_a178d91d9edb261ba863e5d9315f9a3ec} 
+\mbox{\hyperlink{struct_parameter}{Parameter}} {\bfseries param}
+\begin{DoxyCompactList}\small\item\em Zagnieżdżone informacje o mierzonym parametrze. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Opis szczegółowy}
+Reprezentuje pojedynczy czujnik (stanowisko pomiarowe) na stacji. Odpowiada głównemu obiektowi w odpowiedzi API dla czujników stacji. 
+
+Dokumentacja dla tej struktury została wygenerowana z pliku\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_data_structures_8h}{Data\+Structures.\+h}}\end{DoxyCompactItemize}

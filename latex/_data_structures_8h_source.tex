@@ -1,0 +1,81 @@
+\doxysection{Data\+Structures.\+h}
+\hypertarget{_data_structures_8h_source}{}\label{_data_structures_8h_source}\mbox{\hyperlink{_data_structures_8h}{Idź do dokumentacji tego pliku.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ DATASTRUCTURES\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ DATASTRUCTURES\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <QString>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <QDateTime>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_commune}{Commune}}\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ QString\ \mbox{\hyperlink{struct_commune_a8a95d95e5814350392caba3e23a1ace5}{communeName}};\ \ \ \ }
+\DoxyCodeLine{00019\ \ \ \ \ QString\ \mbox{\hyperlink{struct_commune_a03380c443f9e8487ae9cf6c13a81b1e4}{districtName}};\ \ \ }
+\DoxyCodeLine{00020\ \ \ \ \ QString\ \mbox{\hyperlink{struct_commune_a3c4d2501a388ffe0bee2381858d043a1}{provinceName}};\ \ \ }
+\DoxyCodeLine{00021\ \};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_city}{City}}\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id}\ =\ -\/1;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ QString\ \mbox{\hyperlink{struct_city_a4a5b42d915083867ea9a57a8bd1fd472}{name}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{struct_commune}{Commune}}\ \mbox{\hyperlink{struct_city_ab7e6a007f90b5a15e07a25ad343c4847}{commune}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ QString\ \mbox{\hyperlink{struct_city_a8a97977c75bbde40e79ac980bcd4201a}{addressStreet}};\ \ }
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_measuring_station}{MeasuringStation}}\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id}\ =\ -\/1;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ QString\ \mbox{\hyperlink{struct_measuring_station_a8907837fcf54aa06b1436ba0e489d18f}{stationName}};\ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_measuring_station_a47571badd06f37e6ceb3563b83b2cd22}{gegrLat}}\ =\ 0.0;\ \ \ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_measuring_station_a6c633de76ba920d1fb348c3c80d3336a}{gegrLon}}\ =\ 0.0;\ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{struct_city}{City}}\ \mbox{\hyperlink{struct_measuring_station_a9738af7cd611a96851b893ae0632d31b}{city}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00044\ \};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00050\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_parameter}{Parameter}}\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ QString\ \mbox{\hyperlink{struct_parameter_aeeb388e86e4b1d57e04a772e7a6dda75}{paramName}};\ \ \ \ \ \ }
+\DoxyCodeLine{00052\ \ \ \ \ QString\ \mbox{\hyperlink{struct_parameter_adccaaa1cd787c39698795eae0fbc5d02}{paramFormula}};\ \ \ }
+\DoxyCodeLine{00053\ \ \ \ \ QString\ \mbox{\hyperlink{struct_parameter_ab3f5a369df85ffcdfe11589e6de266b0}{paramCode}};\ \ \ \ \ \ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_parameter_ac8e0482ac63451af4c999aced7df3de7}{idParam}}\ =\ -\/1;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00055\ \};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_sensor}{Sensor}}\ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id}\ =\ -\/1;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_sensor_aca0077c550e028e9dfd7f3cd8c9911e5}{stationId}}\ =\ -\/1;\ \ \ \ \ }
+\DoxyCodeLine{00064\ \ \ \ \ \mbox{\hyperlink{struct_parameter}{Parameter}}\ \mbox{\hyperlink{struct_sensor_a178d91d9edb261ba863e5d9315f9a3ec}{param}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00065\ \};}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00070\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_measurement_value}{MeasurementValue}}\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ QDateTime\ \mbox{\hyperlink{struct_measurement_value_ac3db98ca270b1eb4bbb56100d6db95ba}{date}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_measurement_value_a42ec2ba93e3ed3f88313001ee1a68417}{value}}\ =\ std::numeric\_limits<double>::quiet\_NaN();}
+\DoxyCodeLine{00077\ \};}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00083\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_sensor_data}{SensorData}}\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ QString\ \mbox{\hyperlink{struct_sensor_data_ac935f0d091e7ad97e79f6f373327f337}{key}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00085\ \ \ \ \ std::vector<MeasurementValue>\ \mbox{\hyperlink{struct_sensor_data_ada09c15c2ba6f6e9bf41bb32e9d38844}{values}};\ }
+\DoxyCodeLine{00086\ \};}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00092\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_index_level}{IndexLevel}}\ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id}\ =\ -\/1;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ QString\ \mbox{\hyperlink{struct_index_level_af11d558ada85fd501fadb05db338bf44}{indexLevelName}};\ }
+\DoxyCodeLine{00095\ \};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00101\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_air_quality_index}{AirQualityIndex}}\ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_air_quality_index_a1b48c96d30ddacf2eb8fa83ea58a5f83}{stationId}}\ =\ -\/1;\ \ \ \ \ }
+\DoxyCodeLine{00103\ \ \ \ \ QDateTime\ \mbox{\hyperlink{struct_air_quality_index_a383052497d119e8175037e3d52788753}{stCalcDate}};\ \ \ }
+\DoxyCodeLine{00104\ \ \ \ \ QDateTime\ \mbox{\hyperlink{struct_air_quality_index_a9488dfd5f81df6a7be8beba44acc8713}{stSourceDataDate}};\ }
+\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{struct_index_level}{IndexLevel}}\ \mbox{\hyperlink{struct_air_quality_index_a4b4479d74d2d86dd4814b5715151a1f2}{stIndexLevel}};\ }
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{comment}{//\ Poziomy\ indeksów\ dla\ poszczególnych\ zanieczyszczeń}}
+\DoxyCodeLine{00108\ \ \ \ \ \mbox{\hyperlink{struct_index_level}{IndexLevel}}\ \mbox{\hyperlink{struct_air_quality_index_ab2b8e09862ecf32193e28e47c45ed61b}{so2IndexLevel}};\ \ \ }
+\DoxyCodeLine{00109\ \ \ \ \ \mbox{\hyperlink{struct_index_level}{IndexLevel}}\ \mbox{\hyperlink{struct_air_quality_index_ae4ebbb2d1738283f377ae0fc25ddf53c}{no2IndexLevel}};\ \ \ }
+\DoxyCodeLine{00110\ \ \ \ \ \mbox{\hyperlink{struct_index_level}{IndexLevel}}\ \mbox{\hyperlink{struct_air_quality_index_a9c54134a0ac11dcf8039e369d42a0c85}{coIndexLevel}};\ \ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ \mbox{\hyperlink{struct_index_level}{IndexLevel}}\ \mbox{\hyperlink{struct_air_quality_index_ae5897a6cc87e95a1fb316b367aeea5eb}{pm10IndexLevel}};\ \ }
+\DoxyCodeLine{00112\ \ \ \ \ \mbox{\hyperlink{struct_index_level}{IndexLevel}}\ \mbox{\hyperlink{struct_air_quality_index_a6cfee51342801fd28c1c22ce8858e815}{pm25IndexLevel}};\ \ }
+\DoxyCodeLine{00113\ \ \ \ \ \mbox{\hyperlink{struct_index_level}{IndexLevel}}\ \mbox{\hyperlink{struct_air_quality_index_a8439e5458fe9c83a04860c4018a36cf3}{o3IndexLevel}};\ \ \ \ }
+\DoxyCodeLine{00114\ \ \ \ \ \mbox{\hyperlink{struct_index_level}{IndexLevel}}\ \mbox{\hyperlink{struct_air_quality_index_a10becb34bc86f9e9a80d7b4755f305eb}{c6h6IndexLevel}};\ \ }
+\DoxyCodeLine{00115\ \};}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ DATASTRUCTURES\_H}}
+
+\end{DoxyCode}

@@ -5,15 +5,19 @@
 #include <QJsonArray>
 #include <QDir>
 #include <QDebug>
-#include <limits> // For NaN comparison
-
+#include <limits>
+#include <cmath>
 
 DataStorage::DataStorage(const QString& storagePath) : m_storagePath(storagePath)
 {
-    // Ensure storage directory exists
+
     QDir dir(m_storagePath);
     if (!dir.exists()) {
-        dir.mkpath("."); // Create directory if it doesn't exist
+        if(dir.mkpath(".")) {
+            qInfo() << "Created storage directory:" << m_storagePath;
+        } else {
+            qWarning() << "Failed to create storage directory:" << m_storagePath;
+        }
     }
 }
 
@@ -21,8 +25,6 @@ QString DataStorage::getStoragePath() const
 {
     return m_storagePath;
 }
-
-// --- JSON Helper Function Implementations ---
 
 QJsonObject DataStorage::communeToJson(const Commune& commune) {
     QJsonObject obj;
@@ -81,25 +83,28 @@ MeasuringStation DataStorage::stationFromJson(const QJsonObject& obj) {
 
 QJsonObject DataStorage::measurementValueToJson(const MeasurementValue& mv) {
     QJsonObject obj;
-    // Store date as ISO string for consistency
-    obj["date"] = mv.date.isValid() ? mv.date.toString(Qt::ISODate) : QJsonValue();
-    // Store value, handle NaN by storing null
+
+    obj["date"] = mv.date.isValid() ? mv.date.toString(Qt::ISODateWithMs) : QJsonValue();
     obj["value"] = std::isnan(mv.value) ? QJsonValue() : mv.value;
+
     return obj;
 }
 
 MeasurementValue DataStorage::measurementValueFromJson(const QJsonObject& obj) {
     MeasurementValue mv;
-    mv.date = QDateTime::fromString(obj["date"].toString(), Qt::ISODate);
+    mv.date = QDateTime::fromString(obj["date"].toString(), Qt::ISODateWithMs);
     QJsonValue val = obj["value"];
+
     if (val.isNull() || val.isUndefined()) {
         mv.value = std::numeric_limits<double>::quiet_NaN();
     } else {
         mv.value = val.toDouble(std::numeric_limits<double>::quiet_NaN());
     }
+    if (!mv.date.isValid()) {
+        qWarning() << "measurementValueFromJson: Failed to parse date:" << obj["date"].toString();
+    }
     return mv;
 }
-
 
 QJsonObject DataStorage::sensorDataToJson(const SensorData& data) {
     QJsonObject obj;
@@ -124,9 +129,6 @@ SensorData DataStorage::sensorDataFromJson(const QJsonObject& obj) {
     return data;
 }
 
-
-// --- Main Save/Load Functions ---
-
 bool DataStorage::saveStationsToJson(const std::vector<MeasuringStation>& stations, const QString& filename) {
     QJsonArray stationsArray;
     for (const auto& station : stations) {
@@ -134,7 +136,7 @@ bool DataStorage::saveStationsToJson(const std::vector<MeasuringStation>& statio
     }
     QJsonDocument doc(stationsArray);
 
-    QFile file(m_storagePath + "/" + filename);
+    QFile file(m_storagePath + QDir::separator() + filename);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qWarning() << "Couldn't open file for writing:" << file.fileName() << file.errorString();
         return false;
@@ -147,16 +149,16 @@ bool DataStorage::saveStationsToJson(const std::vector<MeasuringStation>& statio
 
 std::vector<MeasuringStation> DataStorage::loadStationsFromJson(const QString& filename) {
     std::vector<MeasuringStation> stations;
-    QFile file(m_storagePath + "/" + filename);
+    QFile file(m_storagePath + QDir::separator() + filename);
 
     if (!file.exists()) {
         qInfo() << "Stations file does not exist:" << file.fileName();
-        return stations; // Return empty if file doesn't exist
+        return stations;
     }
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Couldn't open file for reading:" << file.fileName() << file.errorString();
-        return stations; // Return empty on error
+        return stations;
     }
 
     QByteArray jsonData = file.readAll();
@@ -178,15 +180,14 @@ std::vector<MeasuringStation> DataStorage::loadStationsFromJson(const QString& f
     return stations;
 }
 
-
 bool DataStorage::saveSensorDataToJson(const SensorData& data, const QString& filename) {
     if (data.key.isEmpty()) {
-        qWarning() << "Cannot save empty SensorData.";
+        qWarning() << "Cannot save empty SensorData (no key).";
         return false;
     }
     QJsonDocument doc(sensorDataToJson(data));
 
-    QFile file(m_storagePath + "/" + filename);
+    QFile file(m_storagePath + QDir::separator() + filename);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qWarning() << "Couldn't open file for writing:" << file.fileName() << file.errorString();
         return false;
@@ -199,16 +200,16 @@ bool DataStorage::saveSensorDataToJson(const SensorData& data, const QString& fi
 
 SensorData DataStorage::loadSensorDataFromJson(const QString& filename) {
     SensorData data;
-    QFile file(m_storagePath + "/" + filename);
+    QFile file(m_storagePath + QDir::separator() + filename);
 
     if (!file.exists()) {
         qInfo() << "Sensor data file does not exist:" << file.fileName();
-        return data; // Return empty
+        return data;
     }
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Couldn't open file for reading:" << file.fileName() << file.errorString();
-        return data; // Return empty
+        return data;
     }
 
     QByteArray jsonData = file.readAll();
@@ -225,9 +226,230 @@ SensorData DataStorage::loadSensorDataFromJson(const QString& filename) {
     return data;
 }
 
+bool DataStorage::saveSensorsToJson(int stationId, const std::vector<Sensor>& sensors) {
+    if (stationId <= 0) {
+        qWarning() << "Cannot save sensors, invalid stationId:" << stationId;
+        return false;
+    }
+    QString filename = QString("station_%1_sensors.json").arg(stationId);
+    QJsonArray sensorsArray;
+    for (const auto& sensor : sensors) {
+        sensorsArray.append(sensorToJson(sensor));
+    }
+    QJsonDocument doc(sensorsArray);
 
-// --- XML Stubs (Implement later if needed) ---
-/*
-bool DataStorage::saveStationsToXml(...) { ... return false; }
-std::vector<MeasuringStation> DataStorage::loadStationsFromXml(...) { ... return {}; }
-*/
+    QFile file(m_storagePath + QDir::separator() + filename);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Couldn't open file for writing:" << file.fileName() << file.errorString();
+        return false;
+    }
+    file.write(doc.toJson());
+    file.close();
+    qDebug() << "Sensors for station" << stationId << "saved to" << file.fileName();
+    return true;
+}
+
+std::vector<Sensor> DataStorage::loadSensorsFromJson(int stationId) {
+    std::vector<Sensor> sensors;
+    if (stationId <= 0) {
+        qWarning() << "Cannot load sensors, invalid stationId:" << stationId;
+        return sensors;
+    }
+    QString filename = QString("station_%1_sensors.json").arg(stationId);
+    QFile file(m_storagePath + QDir::separator() + filename);
+
+    if (!file.exists()) {
+        qInfo() << "Sensors file does not exist for station" << stationId << ":" << file.fileName();
+        return sensors;
+    }
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Couldn't open file for reading:" << file.fileName() << file.errorString();
+        return sensors;
+    }
+
+    QByteArray jsonData = file.readAll();
+    file.close();
+
+    QJsonDocument doc = QJsonDocument::fromJson(jsonData);
+    if (!doc.isArray()) {
+        qWarning() << "Error parsing sensors JSON for station" << stationId << ": Not an array.";
+        return sensors;
+    }
+
+    QJsonArray sensorsArray = doc.array();
+    for (const QJsonValue& value : sensorsArray) {
+        if (value.isObject()) {
+            Sensor sensor = sensorFromJson(value.toObject());
+            if (sensor.stationId == stationId || sensor.stationId == -1) {
+                sensors.push_back(sensor);
+            } else {
+                qWarning() << "Sensor ID" << sensor.id << "in file" << filename << "has mismatching stationId" << sensor.stationId;
+            }
+        }
+    }
+    qDebug() << "Sensors for station" << stationId << "loaded from" << file.fileName() << "- Count:" << sensors.size();
+    return sensors;
+}
+
+QJsonObject DataStorage::parameterToJson(const Parameter& param) {
+    QJsonObject obj;
+    obj["paramName"] = param.paramName;
+    obj["paramFormula"] = param.paramFormula;
+    obj["paramCode"] = param.paramCode;
+    obj["idParam"] = param.idParam;
+    return obj;
+}
+
+Parameter DataStorage::parameterFromJson(const QJsonObject& obj) {
+    Parameter param;
+    param.paramName = obj["paramName"].toString();
+    param.paramFormula = obj["paramFormula"].toString();
+    param.paramCode = obj["paramCode"].toString();
+    param.idParam = obj["idParam"].toInt(-1);
+    return param;
+}
+
+QJsonObject DataStorage::sensorToJson(const Sensor& sensor) {
+    QJsonObject obj;
+    obj["id"] = sensor.id;
+    obj["stationId"] = sensor.stationId;
+    obj["param"] = parameterToJson(sensor.param);
+    return obj;
+}
+
+Sensor DataStorage::sensorFromJson(const QJsonObject& obj) {
+    Sensor sensor;
+    sensor.id = obj["id"].toInt(-1);
+    sensor.stationId = obj["stationId"].toInt(-1);
+    sensor.param = parameterFromJson(obj["param"].toObject());
+    return sensor;
+}
+
+QJsonObject DataStorage::indexLevelToJson(const IndexLevel& level) {
+    QJsonObject obj;
+    obj["id"] = level.id;
+    obj["indexLevelName"] = level.indexLevelName;
+    return obj;
+}
+
+IndexLevel DataStorage::indexLevelFromJson(const QJsonObject& obj) {
+    IndexLevel level;
+    level.id = obj["id"].toInt(-1);
+    level.indexLevelName = obj["indexLevelName"].toString("N/A");
+    return level;
+}
+
+QJsonObject DataStorage::airQualityIndexToJson(const AirQualityIndex& index) {
+    QJsonObject obj;
+    obj["stationId"] = index.stationId;
+
+    obj["stCalcDate"] = index.stCalcDate.isValid() ? index.stCalcDate.toString(Qt::ISODateWithMs) : QJsonValue();
+    obj["stSourceDataDate"] = index.stSourceDataDate.isValid() ? index.stSourceDataDate.toString(Qt::ISODateWithMs) : QJsonValue();
+
+    obj["stIndexLevel"] = indexLevelToJson(index.stIndexLevel);
+    obj["so2IndexLevel"] = indexLevelToJson(index.so2IndexLevel);
+    obj["no2IndexLevel"] = indexLevelToJson(index.no2IndexLevel);
+    obj["coIndexLevel"] = indexLevelToJson(index.coIndexLevel);
+    obj["pm10IndexLevel"] = indexLevelToJson(index.pm10IndexLevel);
+    obj["pm25IndexLevel"] = indexLevelToJson(index.pm25IndexLevel);
+    obj["o3IndexLevel"] = indexLevelToJson(index.o3IndexLevel);
+    obj["c6h6IndexLevel"] = indexLevelToJson(index.c6h6IndexLevel);
+    return obj;
+}
+
+AirQualityIndex DataStorage::airQualityIndexFromJson(const QJsonObject& obj) {
+    AirQualityIndex index;
+    index.stationId = obj["stationId"].toInt(-1);
+
+    QString stCalcDateStr = obj["stCalcDate"].toString();
+    QString stSourceDataDateStr = obj["stSourceDataDate"].toString();
+
+    index.stCalcDate = QDateTime::fromString(stCalcDateStr, Qt::ISODateWithMs);
+    index.stSourceDataDate = QDateTime::fromString(stSourceDataDateStr, Qt::ISODateWithMs);
+
+    if (!index.stCalcDate.isValid() && !stCalcDateStr.isEmpty() && stCalcDateStr != "null") {
+        qWarning() << "airQualityIndexFromJson: Failed to parse stCalcDate with ISODateWithMs format:" << stCalcDateStr;
+
+        index.stCalcDate = QDateTime::fromString(stCalcDateStr, Qt::ISODate);
+        if (!index.stCalcDate.isValid() && !stCalcDateStr.isEmpty() && stCalcDateStr != "null") {
+            qWarning() << "airQualityIndexFromJson: Fallback to ISODate format also failed for stCalcDate:" << stCalcDateStr;
+        }
+    }
+    if (!index.stSourceDataDate.isValid() && !stSourceDataDateStr.isEmpty() && stSourceDataDateStr != "null") {
+        qWarning() << "airQualityIndexFromJson: Failed to parse stSourceDataDate with ISODateWithMs format:" << stSourceDataDateStr;
+
+        index.stSourceDataDate = QDateTime::fromString(stSourceDataDateStr, Qt::ISODate);
+        if (!index.stSourceDataDate.isValid() && !stSourceDataDateStr.isEmpty() && stSourceDataDateStr != "null") {
+            qWarning() << "airQualityIndexFromJson: Fallback to ISODate format also failed for stSourceDataDate:" << stSourceDataDateStr;
+        }
+    }
+
+    index.stIndexLevel = indexLevelFromJson(obj["stIndexLevel"].toObject());
+    index.so2IndexLevel = indexLevelFromJson(obj["so2IndexLevel"].toObject());
+    index.no2IndexLevel = indexLevelFromJson(obj["no2IndexLevel"].toObject());
+    index.coIndexLevel = indexLevelFromJson(obj["coIndexLevel"].toObject());
+    index.pm10IndexLevel = indexLevelFromJson(obj["pm10IndexLevel"].toObject());
+    index.pm25IndexLevel = indexLevelFromJson(obj["pm25IndexLevel"].toObject());
+    index.o3IndexLevel = indexLevelFromJson(obj["o3IndexLevel"].toObject());
+    index.c6h6IndexLevel = indexLevelFromJson(obj["c6h6IndexLevel"].toObject());
+    return index;
+}
+
+bool DataStorage::saveAirQualityIndexToJson(int stationId, const AirQualityIndex& index) {
+    if (stationId <= 0 || index.stationId != stationId) {
+        qWarning() << "Cannot save AQI, invalid stationId or mismatch:" << stationId << "vs" << index.stationId;
+        return false;
+    }
+    QString filename = QString("station_%1_aqi.json").arg(stationId);
+    QJsonDocument doc(airQualityIndexToJson(index));
+
+    QFile file(m_storagePath + QDir::separator() + filename);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Couldn't open file for writing:" << file.fileName() << file.errorString();
+        return false;
+    }
+    file.write(doc.toJson());
+    file.close();
+    qDebug() << "AQI for station" << stationId << "saved to" << file.fileName();
+    return true;
+}
+
+AirQualityIndex DataStorage::loadAirQualityIndexFromJson(int stationId) {
+    AirQualityIndex index;
+    if (stationId <= 0) {
+        qWarning() << "Cannot load AQI, invalid stationId:" << stationId;
+        return index;
+    }
+    QString filename = QString("station_%1_aqi.json").arg(stationId);
+    QFile file(m_storagePath + QDir::separator() + filename);
+
+    if (!file.exists()) {
+        qInfo() << "AQI file does not exist for station" << stationId << ":" << file.fileName();
+        return index;
+    }
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Couldn't open file for reading:" << file.fileName() << file.errorString();
+        return index;
+    }
+
+    QByteArray jsonData = file.readAll();
+    file.close();
+
+    QJsonDocument doc = QJsonDocument::fromJson(jsonData);
+    if (!doc.isObject()) {
+        qWarning() << "Error parsing AQI JSON for station" << stationId << ": Not an object.";
+        return index;
+    }
+
+    index = airQualityIndexFromJson(doc.object());
+    if (index.stationId != stationId) {
+        qWarning() << "Loaded AQI from" << filename << "has mismatching stationId" << index.stationId;
+        index.stationId = -1;
+        return index;
+    }
+
+    qDebug() << "AQI for station" << stationId << "loaded from" << file.fileName();
+    return index;
+}

@@ -1,0 +1,37 @@
+\doxysection{Dokumentacja pliku Data\+Structures.\+h}
+\hypertarget{_data_structures_8h}{}\label{_data_structures_8h}\index{DataStructures.h@{DataStructures.h}}
+
+
+Definicje podstawowych struktur danych używanych w aplikacji do przechowywania informacji o stacjach, czujnikach i pomiarach GIOS.  
+
+
+{\ttfamily \#include $<$QString$>$}\newline
+{\ttfamily \#include $<$QDate\+Time$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+\doxysubsubsection*{Komponenty}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_commune}{Commune}}
+\begin{DoxyCompactList}\small\item\em Przechowuje informacje o gminie, powiecie i województwie. Odpowiada strukturze \textquotesingle{}commune\textquotesingle{} w danych API GIOS. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_city}{City}}
+\begin{DoxyCompactList}\small\item\em Przechowuje informacje o mieście/lokalizacji stacji. Odpowiada strukturze \textquotesingle{}city\textquotesingle{} w danych API GIOS. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_measuring_station}{Measuring\+Station}}
+\begin{DoxyCompactList}\small\item\em Reprezentuje stację pomiarową jakości powietrza. Odpowiada głównemu obiektowi w odpowiedzi API dla stacji. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_parameter}{Parameter}}
+\begin{DoxyCompactList}\small\item\em Przechowuje informacje o parametrze mierzonym przez czujnik. Odpowiada strukturze \textquotesingle{}param\textquotesingle{} w danych API GIOS dla czujników. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_sensor}{Sensor}}
+\begin{DoxyCompactList}\small\item\em Reprezentuje pojedynczy czujnik (stanowisko pomiarowe) na stacji. Odpowiada głównemu obiektowi w odpowiedzi API dla czujników stacji. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_measurement_value}{Measurement\+Value}}
+\begin{DoxyCompactList}\small\item\em Reprezentuje pojedynczą wartość pomiarową wraz z datą jej wykonania. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_sensor_data}{Sensor\+Data}}
+\begin{DoxyCompactList}\small\item\em Przechowuje serię danych pomiarowych dla konkretnego parametru (klucza) z jednego czujnika. Odpowiada strukturze danych zwracanej przez API dla danych pomiarowych czujnika. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_index_level}{Index\+Level}}
+\begin{DoxyCompactList}\small\item\em Reprezentuje poziom indeksu jakości powietrza (ogólny lub dla konkretnego zanieczyszczenia). Odpowiada strukturze \textquotesingle{}\texorpdfstring{$\ast$}{*}\+Index\+Level\textquotesingle{} w danych API GIOS dla indeksu AQI. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_air_quality_index}{Air\+Quality\+Index}}
+\begin{DoxyCompactList}\small\item\em Przechowuje zagregowany indeks jakości powietrza (AQI) dla stacji. Odpowiada głównemu obiektowi w odpowiedzi API dla indeksu AQI. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Opis szczegółowy}
+Definicje podstawowych struktur danych używanych w aplikacji do przechowywania informacji o stacjach, czujnikach i pomiarach GIOS. 
+
