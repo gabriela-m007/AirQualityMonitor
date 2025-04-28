@@ -1,4 +1,4 @@
-﻿Monitor Jakości Powietrza - Projekt JPO 2024/2025
+﻿Monitor Jakości Powietrza ("AirQualityMonitor") - Projekt JPO 2024/2025
 
 
 Aplikacja desktopowa (C++/Qt) do monitorowania jakości powietrza w Polsce, wykorzystująca API Głównego Inspektoratu Ochrony Środowiska (GIOS).
